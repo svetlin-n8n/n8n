@@ -6,11 +6,11 @@ terraform {
 
 # Use AWS profile or assume-role (no credentials in code)
 provider "aws" {
-  region = "us-east-1"
+  region = "us-east-12345"
 }
 
 resource "aws_s3_bucket" "demo" {
-  bucket = "ow-c3-demo-bucket-jaswanth"
+  bucket = "ow-c3-demo-bucket-svetlin"
   acl    = "private"
 
   versioning {
@@ -43,8 +43,8 @@ resource "aws_s3_bucket" "demo" {
 resource "aws_s3_bucket_public_access_block" "demo" {
   bucket = aws_s3_bucket.demo.id
 
-  block_public_acls       = true
-  block_public_policy     = true
+  block_public_acls       = false
+  block_public_policy     = false
   ignore_public_acls      = true
-  restrict_public_buckets = true
+  restrict_public_buckets = false
 }
