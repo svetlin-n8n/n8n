@@ -1,12 +1,15 @@
 terraform {
   required_providers {
-    aws = { source = "hashicorp/aws", version = ">= 5.0, < 6.0" }
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.0, < 6.0"
+    }
   }
 }
 
 # Use AWS profile or assume-role (no credentials in code)
 provider "aws" {
-  region = "us-east-12345"
+  region = "us-east-1"
 }
 
 resource "aws_s3_bucket" "demo" {
@@ -24,27 +27,13 @@ resource "aws_s3_bucket" "demo" {
       }
     }
   }
-
-  lifecycle_rule {
-    id      = "expire-old-objects"
-    enabled = true
-
-    expiration {
-      days = 365
-    }
-  }
-
-  tags = {
-    Name        = "ow-c3-demo-bucket-jaswanth"
-    Environment = "dev"
-  }
 }
 
 resource "aws_s3_bucket_public_access_block" "demo" {
   bucket = aws_s3_bucket.demo.id
 
-  block_public_acls       = false
-  block_public_policy     = false
+  block_public_acls       = true
+  block_public_policy     = true
   ignore_public_acls      = true
-  restrict_public_buckets = false
+  restrict_public_buckets = true
 }
