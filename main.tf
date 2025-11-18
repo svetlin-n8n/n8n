@@ -1,6 +1,9 @@
 terraform {
   required_providers {
-    aws = { source = "hashicorp/aws", version = ">= 5.0, < 6.0" }
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.0, < 6.0"
+    }
   }
 }
 
@@ -10,7 +13,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "demo" {
-  bucket = "ow-c3-demo-bucket-jaswanth"
+  bucket = "ow-c3-demo-bucket-svetlin"
   acl    = "private"
 
   versioning {
@@ -23,20 +26,6 @@ resource "aws_s3_bucket" "demo" {
         sse_algorithm = "AES256"
       }
     }
-  }
-
-  lifecycle_rule {
-    id      = "expire-old-objects"
-    enabled = true
-
-    expiration {
-      days = 365
-    }
-  }
-
-  tags = {
-    Name        = "ow-c3-demo-bucket-jaswanth"
-    Environment = "dev"
   }
 }
 
